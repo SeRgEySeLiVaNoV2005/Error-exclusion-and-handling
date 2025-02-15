@@ -1,31 +1,25 @@
 ﻿#include <iostream>
 #include <locale.h>
+
+#include "Error.h"
 using namespace std;
-int function(string* str, int forbidden_length) {
-	if ((*str).length() != forbidden_length) {
-		cout << "Длина слова " << *str << " равна " << (*str).length() << endl;
-		return 1;
-	}
-	else {
-		throw("bad_length");
-		return 0;
-	}
-}
 
 int main() {
 	setlocale(LC_ALL, "Rus");
 	int forbiddenLength;
 	string word;
+	Error error;
 	cout << "Введите запретную длину: ";
 	cin >> forbiddenLength;
 	while (1) {
 		cout << "Введите слово: ";
 		cin >> word;
 		try {
-			function(&word, forbiddenLength);
+			error.function(&word, forbiddenLength);
 		}
-		catch(...){
-			cout << "Вы ввели слово запретной длины! До свидания" << endl;
+		catch(std::exception){
+			/*cout << "Вы ввели слово запретной длины! До свидания" << endl;*/
+			std::runtime_error("Вы ввели слово запретной длины! До свидания");
 			break;
 		}
 	}
